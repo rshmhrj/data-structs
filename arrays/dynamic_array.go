@@ -10,14 +10,16 @@ type DynamicArray struct {
 	data []interface{}
 }
 
-func MakeDynamicArray(array ...interface{}) *DynamicArray {
+// MakeDynamicArray creates a new dynamic array with the given values
+func MakeDynamicArray(values ...interface{}) *DynamicArray {
 	return &DynamicArray{
-		len:  len(array),
-		cap:  len(array),
-		data: array,
+		len:  len(values),
+		cap:  len(values),
+		data: values,
 	}
 }
 
+// InitDynamicArray creates a new, empty dynamic array with the given size
 func InitDynamicArray(size int) *DynamicArray {
 	if size < 0 {
 		panic("Illegal size chosen for new array")
