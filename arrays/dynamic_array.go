@@ -10,17 +10,8 @@ type DynamicArray struct {
 	data []interface{}
 }
 
-// MakeDynamicArray creates a new dynamic array with the given values
-func MakeDynamicArray(values ...interface{}) *DynamicArray {
-	return &DynamicArray{
-		len:  len(values),
-		cap:  len(values),
-		data: values,
-	}
-}
-
-// InitDynamicArray creates a new, empty dynamic array with the given size
-func InitDynamicArray(size int) *DynamicArray {
+// NewDynamicArray creates a new, empty dynamic array with the given size
+func NewDynamicArray(size int) *DynamicArray {
 	if size < 0 {
 		panic("Illegal size chosen for new array")
 		return nil
@@ -29,6 +20,15 @@ func InitDynamicArray(size int) *DynamicArray {
 		len:  0,
 		cap:  size,
 		data: make([]interface{}, size),
+	}
+}
+
+// InitDynamicArray creates a new dynamic array with the given values
+func InitDynamicArray(values ...interface{}) *DynamicArray {
+	return &DynamicArray{
+		len:  len(values),
+		cap:  len(values),
+		data: values,
 	}
 }
 
@@ -74,7 +74,7 @@ func (da *DynamicArray) Clear() {
 	da.len = 0
 }
 
-// Add new value to the array
+// Add new value to the end of the array
 func (da *DynamicArray) Add(value interface{}) {
 	if da.len+1 > da.cap {
 		da.Scale()
