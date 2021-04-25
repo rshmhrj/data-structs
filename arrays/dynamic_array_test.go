@@ -1,6 +1,7 @@
 package arrays
 
 import (
+	"math"
 	"testing"
 )
 
@@ -256,6 +257,31 @@ func TestDynamicArray_AddAt(t *testing.T) {
 	wanted := MakeDynamicArray(10, 20, 30, 40, 50)
 	if got.String() != wanted.String() {
 		t.Errorf("Incorrectly added at index 0, got: %v, wanted: %v", got.String(), wanted.String())
+	}
+}
+
+func TestCreatingBigAssArrays(t *testing.T) {
+	maxInt32Size := math.MaxInt32   // 2147483647
+	maxUint32Size := math.MaxUint32 // 4294967295
+	got := InitDynamicArray(maxInt32Size)
+	wanted := maxInt32Size
+	if got.cap != wanted {
+		t.Errorf("Could not handle creating big array, got: %v, wanted: %v", got.cap, wanted)
+	}
+	got = InitDynamicArray(maxInt32Size + 1)
+	wanted = maxInt32Size + 1
+	if got.cap != wanted {
+		t.Errorf("Could not handle creating big array, got: %v, wanted: %v", got.cap, wanted)
+	}
+	got = InitDynamicArray(maxUint32Size)
+	wanted = maxUint32Size
+	if got.cap != wanted {
+		t.Errorf("Could not handle creating big array, got: %v, wanted: %v", got.cap, wanted)
+	}
+	got = InitDynamicArray(maxUint32Size + 1)
+	wanted = maxUint32Size + 1
+	if got.cap != wanted {
+		t.Errorf("Could not handle creating big array, got: %v, wanted: %v", got.cap, wanted)
 	}
 }
 
