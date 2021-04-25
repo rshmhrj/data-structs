@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-func TestNewIntArray(t *testing.T) {
-	a := NewIntArray(10)
+func TestInitDynamicArray(t *testing.T) {
+	a := InitDynamicArray(10)
 	if a.len != 0 {
 		t.Errorf("Incorrectly assigned length, got: %v, wanted: %v", a.len, 0)
 	}
@@ -13,14 +13,14 @@ func TestNewIntArray(t *testing.T) {
 		t.Errorf("Incorrectly assigned capacity, got: %v, wanted: %v", a.cap, 10)
 	}
 	for i, v := range a.data {
-		if v != 0 {
-			t.Errorf("Incorrectly created default empty int array, got: %v at index %v, wanted %v", v, i, 0)
+		if v != nil {
+			t.Errorf("Incorrectly created default empty dynamic array, got: %v at index %v, wanted %v", v, i, 0)
 		}
 	}
 }
 
-func TestMakeIntArray(t *testing.T) {
-	a := MakeIntArray(10, 20, 30, 40, 50)
+func TestMakeDynamicArray(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30, 40, 50)
 	if a.len != 5 {
 		t.Errorf("Incorrectly assigned length, got: %v, wanted: %v", a.len, 5)
 	}
@@ -29,13 +29,13 @@ func TestMakeIntArray(t *testing.T) {
 	}
 	for i, v := range a.data {
 		if v != (i+1)*10 {
-			t.Errorf("Incorrectly created default empty int array, got: %v at index %v, wanted %v", v, i, (i+1)*10)
+			t.Errorf("Incorrectly created default empty dynamic array, got: %v at index %v, wanted %v", v, i, (i+1)*10)
 		}
 	}
 }
 
-func TestIntArray_Set(t *testing.T) {
-	a := NewIntArray(5)
+func TestDynamicArray_Set(t *testing.T) {
+	a := InitDynamicArray(5)
 	a.Set(0, 10)
 	if a.data[0] != 10 {
 		t.Errorf("Incorrectly setting value in array, got: %v, wanted: %v", a.data[0], 10)
@@ -73,8 +73,8 @@ func TestIntArray_Set(t *testing.T) {
 	}
 }
 
-func TestIntArray_IsEmpty(t *testing.T) {
-	a := NewIntArray(5)
+func TestDynamicArray_IsEmpty(t *testing.T) {
+	a := InitDynamicArray(5)
 	if a.IsEmpty() != true {
 		t.Errorf("Incorrectly checking whether emptiness of new blank array, got: %v, wanted %v", a.IsEmpty(), true)
 	}
@@ -88,8 +88,8 @@ func TestIntArray_IsEmpty(t *testing.T) {
 	}
 }
 
-func TestIntArray_Clear(t *testing.T) {
-	a := MakeIntArray(10, 20, 30)
+func TestDynamicArray_Clear(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30)
 	a.Clear()
 	if a.len != 0 {
 		t.Errorf("Incorrectly cleared array length, got: %v, wanted: %v", a.len, 0)
@@ -99,8 +99,8 @@ func TestIntArray_Clear(t *testing.T) {
 	}
 }
 
-func TestIntArray_Remove(t *testing.T) {
-	a := MakeIntArray(10, 20, 30, 40, 50)
+func TestDynamicArray_Remove(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30, 40, 50)
 	a.Remove(20)
 	if a.data[0] != 10 && a.data[1] != 30 && a.data[2] != 40 && a.data[3] != 50 && a.data[4] != 0 {
 		t.Errorf("Incorrectly removed value from array, got: %v, wanted: %v", a.data, []int{10, 30, 40, 50, 0})
@@ -110,8 +110,8 @@ func TestIntArray_Remove(t *testing.T) {
 	}
 }
 
-func TestIntArray_RemoveAt(t *testing.T) {
-	a := MakeIntArray(10, 20, 30, 40, 50)
+func TestDynamicArray_RemoveAt(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30, 40, 50)
 	a.RemoveAt(2)
 	if a.data[0] != 10 && a.data[1] != 30 && a.data[2] != 40 && a.data[3] != 50 && a.data[4] != 0 {
 		t.Errorf("Incorrectly removed value from array, got: %v, wanted: %v", a.data, []int{10, 30, 40, 50, 0})
@@ -121,8 +121,8 @@ func TestIntArray_RemoveAt(t *testing.T) {
 	}
 }
 
-func TestIntArray_IndexOf(t *testing.T) {
-	a := MakeIntArray(10, 20, 30, 40, 50)
+func TestDynamicArray_IndexOf(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30, 40, 50)
 	if a.IndexOf(20) != 1 {
 		t.Errorf("Incorrectly found index of value in array, got: %v, wanted %v", a.IndexOf(20), 1)
 	}
@@ -131,8 +131,8 @@ func TestIntArray_IndexOf(t *testing.T) {
 	}
 }
 
-func TestIntArray_Contains(t *testing.T) {
-	a := MakeIntArray(10, 20, 30, 40, 50)
+func TestDynamicArray_Contains(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30, 40, 50)
 	if a.Contains(20) != true {
 		t.Errorf("Incorrectly found value in array, got: %v for value %v in array %v, wanted %v", a.Contains(20), 20, a.data, true)
 	}
@@ -141,9 +141,9 @@ func TestIntArray_Contains(t *testing.T) {
 	}
 }
 
-func TestIntArray_Scale(t *testing.T) {
+func TestDynamicArray_Scale(t *testing.T) {
 	size := 5
-	a := NewIntArray(size)
+	a := InitDynamicArray(size)
 	if a.cap != size {
 		t.Errorf("Incorrectly assigned capacity, got: %v, wanted: %v", a.cap, size)
 	}
@@ -198,7 +198,7 @@ func TestIntArray_Scale(t *testing.T) {
 		t.Errorf("Incorrectly assigned capacity, got: %v, wanted: %v", a.cap, size)
 	}
 	size = 1000
-	b := NewIntArray(size)
+	b := InitDynamicArray(size)
 	size = 1100
 	b.Scale()
 	if b.cap != size {
@@ -206,7 +206,7 @@ func TestIntArray_Scale(t *testing.T) {
 	}
 
 	size = 10000
-	c := NewIntArray(size)
+	c := InitDynamicArray(size)
 	size = 11000
 	c.Scale()
 	if c.cap != size {
@@ -214,8 +214,8 @@ func TestIntArray_Scale(t *testing.T) {
 	}
 }
 
-func TestIntArray_String(t *testing.T) {
-	a := MakeIntArray(10, 20, 30)
+func TestDynamicArray_String(t *testing.T) {
+	a := MakeDynamicArray(10, 20, 30)
 	got := a.String()
 	wanted := "[ 10, 20, 30 ]"
 	if got != wanted {
@@ -224,8 +224,8 @@ func TestIntArray_String(t *testing.T) {
 }
 
 // If you do RemoveAt(0) it'll hit line 87 making j = -1. Then on line 89 tmp[-1] will cause an index issue
-func TestIntArray_RemoveAtIndex0(t *testing.T) {
-	a := MakeIntArray(11, 22, 33, 44, 55)
+func TestDynamicArray_RemoveAtIndex0(t *testing.T) {
+	a := MakeDynamicArray(11, 22, 33, 44, 55)
 	a.RemoveAt(0)
 	got := a.String()
 	wanted := "[ 22, 33, 44, 55 ]"
@@ -235,17 +235,32 @@ func TestIntArray_RemoveAtIndex0(t *testing.T) {
 }
 
 // If you have something like [11, 22, 33, 44, 55] and do RemoveAt(-4) it won't hit the panic statement in line 81
-func TestIntArray_RemoveAtNegativeIndex(t *testing.T) {
+func TestDynamicArray_RemoveAtNegativeIndex(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("Incorrectly handled panic")
 		}
 	}()
 
-	a := MakeIntArray(11, 22, 33, 44, 55)
+	a := MakeDynamicArray(11, 22, 33, 44, 55)
 	a.RemoveAt(-4)
 	a.RemoveAt(-3)
 	a.RemoveAt(-2)
 	a.RemoveAt(-1)
 	a.RemoveAt(-0)
+}
+
+func TestDynamicArray_AddAt(t *testing.T) {
+	got := MakeDynamicArray(20, 30, 40, 50)
+	got.AddAt(0, 10)
+	wanted := MakeDynamicArray(10, 20, 30, 40, 50)
+	if got.String() != wanted.String() {
+		t.Errorf("Incorrectly added at index 0, got: %v, wanted: %v", got.String(), wanted.String())
+	}
+}
+
+func BenchmarkNewDynamicArray(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		InitDynamicArray(10)
+	}
 }
