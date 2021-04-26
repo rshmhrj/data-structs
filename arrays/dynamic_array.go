@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// DynamicArray represents an array which can be dynamically resized.
+// Time Complexity: Access O(1), Search O(n), Insert O(n), Delete O(n).
+// Space Complexity: O(n).
 type DynamicArray struct {
 	len  int
 	cap  int
