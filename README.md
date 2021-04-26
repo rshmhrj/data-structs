@@ -1,5 +1,8 @@
 ## Data Structures for Go
 This repo contains hopefully idiomatic Golang code for specific data structure implementations.
+- [Gitlab (master)](https://gitlab.com/rshmhrj/data-structs)
+- [Github (mirror)](https://github.com/rshmhrj/data-structs)
+
 
 
 ### Requirements
